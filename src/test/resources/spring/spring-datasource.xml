@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- MySQL -->
+
+	<bean id="adapter" class="org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS">
+		<property name="driver" value="${mysql.jdbc.driver}"/>
+		<property name="url" value="${mysql.jdbc.url}"/>
+		<property name="user" value="${mysql.jdbc.user}"/>
+		<property name="password" value="${mysql.jdbc.password}"/>
+	</bean>
+
+	<bean id="dataSourceImpl" class="org.apache.commons.dbcp.datasources.SharedPoolDataSource" destroy-method="close">
+		<property name="connectionPoolDataSource" ref="adapter"/>
+		<property name="maxActive" value="8"/>
+		<property name="maxIdle" value="8"/>
+		<property name="maxWait" value="10000"/>
+		<property name="defaultAutoCommit" value="true"/>
+		<property name="validationQuery" value="select now()"/>
+	</bean>
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+		<property name="targetDataSource">
+			<ref local="dataSourceImpl"/>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceImpl"/>
+	</bean>
+
+</beans>

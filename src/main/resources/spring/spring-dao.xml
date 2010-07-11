@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- DAO -->
+
+	<bean id="daoUser" class="cz.novoj.dao.mysql.UserDaoImpl">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<bean id="daoUserProperty" class="cz.novoj.dao.mysql.UserPropertiesDaoImpl">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+</beans>
