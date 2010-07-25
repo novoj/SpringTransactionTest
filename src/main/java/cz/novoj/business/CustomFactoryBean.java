@@ -7,6 +7,8 @@ import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.Constructor;
+
 /**
  * Description
  *
@@ -19,14 +21,29 @@ public class CustomFactoryBean implements FactoryBean {
 	@Autowired(required = true)
 	private UserPropertiesDao<User> daoUserProperties;
 
+	private Class userManagerClass;
+	private Constructor userManagerClassConstructor;
+
 	public Object getObject() throws Exception {
-		ProxyFactory factory = new ProxyFactory(new UserManager(daoUser, daoUserProperties));
+		Object userManagerInstance = userManagerClassConstructor.newInstance(daoUser, daoUserProperties);
+		ProxyFactory factory = new ProxyFactory(userManagerInstance);
 		factory.setProxyTargetClass(true);
 		return factory.getProxy();
 	}
 
+	public void setUserManagerClass(Class userManagerClass) {
+		try {
+			this.userManagerClass = userManagerClass;
+			this.userManagerClassConstructor =
+					userManagerClass.getDeclaredConstructor(UserDao.class, UserPropertiesDao.class);
+		}
+		catch(NoSuchMethodException e) {
+			throw new RuntimeException("Cannot find appropriate constructor on user manager class!");
+		}
+	}
+
 	public Class getObjectType() {
-		return UserManager.class;
+		return userManagerClass;
 	}
 
 	public boolean isSingleton() {

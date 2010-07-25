@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import static cz.novoj.TestUtils.getUser;
 import static cz.novoj.TestUtils.getUserProperties;
 
-public class UserManagerIntegrationTest extends AbstractUserManagerTransactionalTest {
+public class ProgramaticFactoryBeanUserManagerIntegrationTest extends AbstractUserManagerTransactionalTest {
 
 	@Autowired(required = true)
-	@Qualifier("userManager")
-	UserManager userManager;
+	@Qualifier("factoryBeanUserManager")
+	UserManager factoryBeanUserManager;
 
 	@Override
 	protected Class getManagerClass() {
@@ -25,7 +25,7 @@ public class UserManagerIntegrationTest extends AbstractUserManagerTransactional
 
 	@Override
 	protected void callLogic() {
-		userManager.createUserWithProperties(getUser(), getUserProperties());
+		factoryBeanUserManager.createUserWithProperties(getUser(), getUserProperties());
 	}
 	
 }

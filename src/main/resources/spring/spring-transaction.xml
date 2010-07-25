@@ -11,21 +11,6 @@
 
     <!-- DECLARING TRANSACTION STRATEGY -->
 
-    <!-- <tx:annotation-driven proxy-target-class="true"/> -->
-
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
-        <property name="proxyTargetClass" value="true"/>
-    </bean>
-
-    <bean class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
-        <property name="transactionInterceptor" ref="transactionInterceptor"/>
-    </bean>
-
-    <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
-        <property name="transactionManager" ref="transactionManager"/>
-        <property name="transactionAttributeSource">
-            <bean class="cz.novoj.business.CglibOptimizedAnnotationTransactionAttributeSource"/>
-        </property>
-    </bean>
+    <tx:annotation-driven proxy-target-class="true"/>
 
 </beans>

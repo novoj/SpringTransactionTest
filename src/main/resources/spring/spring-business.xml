@@ -9,8 +9,22 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 	   	">
 
-	<bean id="userManager" class="cz.novoj.business.UserManager"/>    
+	<bean id="userManager" class="cz.novoj.business.userManagerVariations.UserManager"/>
 
-    <bean id="userManagerFromCustomFactoryBean" class="cz.novoj.business.CustomFactoryBean"/>
+    <bean id="interfaceBasedUserManager" class="cz.novoj.business.userManagerVariations.InterfaceBasedUserManager"/>
+
+    <bean id="classWideAnnotationUserManager" class="cz.novoj.business.userManagerVariations.ClassWideAnnotationUserManager"/>
+
+    <bean id="factoryBeanUserManager" class="cz.novoj.business.CustomFactoryBean">
+        <property name="userManagerClass" value="cz.novoj.business.userManagerVariations.UserManager"/>
+    </bean>
+
+    <bean id="factoryBeanInterfaceBasedUserManager" class="cz.novoj.business.CustomFactoryBean">
+        <property name="userManagerClass" value="cz.novoj.business.userManagerVariations.InterfaceBasedUserManager"/>
+    </bean>    
+
+    <bean id="factoryBeanClassWideAnnotationUserManager" class="cz.novoj.business.CustomFactoryBean">
+        <property name="userManagerClass" value="cz.novoj.business.userManagerVariations.ClassWideAnnotationUserManager"/>
+    </bean>
 
 </beans>

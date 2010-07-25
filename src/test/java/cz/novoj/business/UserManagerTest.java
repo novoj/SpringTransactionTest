@@ -5,8 +5,8 @@ package cz.novoj.business;
  * @version $Id: $
  */
 
+import cz.novoj.business.userManagerVariations.UserManager;
 import cz.novoj.dao.mysql.AbstractDaoTest;
-import cz.novoj.model.User;
 import cz.novoj.spring.utils.HostConfigurableContextLoader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.util.HashMap;
-import java.util.Map;
+import static cz.novoj.TestUtils.getUser;
+import static cz.novoj.TestUtils.getUserProperties;
 
 @ContextConfiguration(
 		locations = {
@@ -34,17 +34,7 @@ public class UserManagerTest extends AbstractDaoTest {
 
 	@Test
 	public void testCreateUserWithProperties() throws Exception {
-		createUserByManager(userManager);
-	}
-
-	protected void createUserByManager(UserManager userManager) {
-		User myUser = new User("pepin", "sHeslem");
-		Map<String, String> props = new HashMap<String, String>();
-
-		props.put("firstName", "Pepin");
-		props.put("lastName", "Grill Master");
-
-		userManager.createUserWithProperties(myUser, props);
+		userManager.createUserWithProperties(getUser(), getUserProperties());
 	}
 
 }

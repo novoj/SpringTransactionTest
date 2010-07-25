@@ -8,13 +8,17 @@ package cz.novoj.dao.mysql;
 import cz.novoj.dao.UserDao;
 import cz.novoj.dao.UserPropertiesDao;
 import cz.novoj.model.DatabaseUser;
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.transaction.BeforeTransaction;
 
+import java.io.IOException;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class UserPropertiesDaoImplTest extends AbstractDaoTest {
 	@Autowired(required = true)
@@ -27,7 +31,8 @@ public class UserPropertiesDaoImplTest extends AbstractDaoTest {
 	DatabaseUser novoj;
 
 	@BeforeTransaction
-	public void init() throws Exception {
+	public void init() throws IOException {
+		super.init();
 		DatabaseUser user = daoUser.getUser("novoj");
 		if(user == null) {
 			daoUser.addUser("novoj", "heslicko");
